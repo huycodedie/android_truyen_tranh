@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_trang_chu"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Trang Chủ" />
+
+    <item
+        android:id="@+id/navigation_da_xem"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="Theo Doi" />
+
+    <item
+        android:id="@+id/navigation_toi"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="Tôi" />
+
+</menu>

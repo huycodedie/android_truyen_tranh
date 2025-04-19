@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_trang_chu">
+
+    <fragment
+        android:id="@+id/navigation_trang_chu"
+        android:name="com.example.app_truyen_do_an.ui.trang_chu.trang_chu"
+        tools:layout="@layout/fragment_trang_chu" />
+
+    <fragment
+        android:id="@+id/navigation_da_xem"
+        android:name="com.example.app_truyen_do_an.ui.da_xem.da_xem"
+        tools:layout="@layout/fragment_da_xem" />
+
+    <fragment
+        android:id="@+id/navigation_toi"
+        android:name="com.example.app_truyen_do_an.ui.toi.toi"
+        tools:layout="@layout/fragment_toi" />
+</navigation>

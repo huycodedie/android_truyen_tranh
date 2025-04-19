@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="70dp"
+    tools:context=".ui.profile_truyen.thong_tin_truyen">
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/orange"
+        app:tabIndicatorHeight="4dp"
+        app:tabGravity="fill"
+        app:tabRippleColor="@color/white"
+        app:tabMode="fixed"
+        app:tabInlineLabel="true"
+        app:tabTextColor="@drawable/tab_selector"
+        android:background="@color/white"
+        tools:ignore="MissingConstraints" />
+
+    <!-- ViewPager2 -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+        <Button
+            android:id="@+id/doc_tu_dau"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:text="doc tu dau"/>
+        <Button
+            android:id="@+id/doc_tiep"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_orange_light"
+            android:textColor="@color/white"
+            android:text="doc tiep"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
