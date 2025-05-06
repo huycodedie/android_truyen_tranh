@@ -6,7 +6,9 @@ public class truyen {
     private String id_truyen;
     private String name_truyen;
     private String name_tac_gia;
+    private String name_tac_gia_t;
     private String anh;
+    private String anh_tac_gia;
     private String luot_xem;
     private int trang_thai;
     private String gioi_thieu;
@@ -43,6 +45,14 @@ public class truyen {
 
     public String getAnh() {
         return anh;
+    }
+
+    public String getAnh_tac_gia() {
+        return anh_tac_gia;
+    }
+
+    public String getName_tac_gia_t() {
+        return name_tac_gia_t;
     }
 
     public String getLuot_xem() {

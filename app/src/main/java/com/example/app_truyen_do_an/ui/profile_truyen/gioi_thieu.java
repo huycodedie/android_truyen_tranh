@@ -40,7 +40,7 @@ import retrofit2.Response;
 
 public class gioi_thieu extends Fragment {
     private TextView gioi_thieu_tt, name_tac_gia_tt, ten_truyen_tt, luot_xem, tien_do;
-    private ImageView anh_tt, theo_doi;
+    private ImageView anh_truyen_tt, anh_tac_gia, theo_doi;
     private RecyclerView recyclerView;
     private int so1 = 1, so0 = 0;
     private TheloaiAdapter theloaiAdapter;
@@ -56,7 +56,8 @@ public class gioi_thieu extends Fragment {
         ten_truyen_tt = view.findViewById(R.id.ten_truyen_tt);
         name_tac_gia_tt = view.findViewById(R.id.name_tac_gia_tt);
         gioi_thieu_tt = view.findViewById(R.id.gioi_thieu_tt);
-        anh_tt = view.findViewById(R.id.anh_tt);
+        anh_truyen_tt = view.findViewById(R.id.anh_truyen_tt);
+        anh_tac_gia = view.findViewById(R.id.anh_tac_gia);
         theo_doi = view.findViewById(R.id.theo_doi_truyen);
         luot_xem = view.findViewById(R.id.luot_xem);
         recyclerView = view.findViewById(R.id.view_the_loai);
@@ -67,12 +68,19 @@ public class gioi_thieu extends Fragment {
 
         viewmodel.gettruyenchitiet().observe(getViewLifecycleOwner(), truyen -> {
             ten_truyen_tt.setText(truyen.getName_truyen());
-            name_tac_gia_tt.setText(truyen.getName_tac_gia());
+            if (truyen.getName_tac_gia_t() != null){
+                name_tac_gia_tt.setText(truyen.getName_tac_gia_t());
+            }else {
+                name_tac_gia_tt.setText(truyen.getName_tac_gia());
+            }
             gioi_thieu_tt.setText(truyen.getGioi_thieu());
             luot_xem.setText(truyen.getLuot_xem());
             Glide.with(getContext())
                     .load(truyen.getAnh())
-                    .into(anh_tt);
+                    .into(anh_truyen_tt);
+            Glide.with(getContext())
+                    .load(truyen.getAnh_tac_gia())
+                    .into(anh_tac_gia);
             if (truyen != null && truyen.getThe_loai() != null){
                 theloaiAdapter = new TheloaiAdapter(truyen.getThe_loai(),getContext());
                 recyclerView.setAdapter(theloaiAdapter);
@@ -113,7 +121,7 @@ public class gioi_thieu extends Fragment {
             Toast.makeText(getContext(), "vui lòng đăng nhập để theo dõi truyện", Toast.LENGTH_SHORT).show();
             return;
         }
-        ApiService apiService = RetrofitClient.getClient("https://t.lixitet.top/").create(ApiService.class);
+        ApiService apiService = RetrofitClient.getApiService();
         Call<Void>call = apiService.themluu(id_user,idTruyen,so);
         call.enqueue(new Callback<Void>() {
             @Override
@@ -137,7 +145,7 @@ public class gioi_thieu extends Fragment {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Myapp", Context.MODE_PRIVATE);
         int id_user = sharedPreferences.getInt("id_user", -1);
         if (id_user == -1) return;
-        ApiService apiService = RetrofitClient.getClient("https://t.lixitet.top/").create(ApiService.class);
+        ApiService apiService = RetrofitClient.getApiService();
         Call<Void>call =apiService.savert(id_user,idTruyen);
         call.enqueue(new Callback<Void>() {
             @Override

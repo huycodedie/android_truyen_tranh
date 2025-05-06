@@ -46,7 +46,6 @@ public class da_xem extends Fragment {
     private Button bt1;
     private ImageView tim_kiem;
     private SharedPreferences sharedPreferences;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private LuuAdapter luuAdapter;
     private ApiService apiService;
     private RecyclerView recyclerView;
@@ -93,7 +92,7 @@ public class da_xem extends Fragment {
     }
 
     private void truyendaxem(int iduser) {
-        apiService = RetrofitClient.getClient("https://t.lixitet.top/").create(ApiService.class);
+        apiService = RetrofitClient.getApiService();
         Call<List<truyen>> call = apiService.getluu(iduser);
         call.enqueue(new Callback<List<truyen>>() {
             @Override

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,12 +22,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.example.app_truyen_do_an.Adapter.ImageSliderAdapter;
 import com.example.app_truyen_do_an.Adapter.TruyenAdapter;
 import com.example.app_truyen_do_an.MainActivity;
 import com.example.app_truyen_do_an.R;
 import com.example.app_truyen_do_an.api.ApiService;
+import com.example.app_truyen_do_an.api.RetrofitClient;
 import com.example.app_truyen_do_an.model.Chuong;
 import com.example.app_truyen_do_an.model.truyen;
 import com.example.app_truyen_do_an.ui.profile_truyen.thong_tin_truyen;
@@ -53,8 +56,7 @@ public class trang_chu extends Fragment {
     private Handler sliderHandler = new Handler();
     private Runnable sliderRunnable;
     private int i = 0;
-    private ApiService apiService;
-    private LinearLayout linearLayout1;
+    private LinearLayout linearLayout1,tim_the_loai;
     private ImageView tim_k, truyen_moi;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -62,6 +64,7 @@ public class trang_chu extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trang_chu, container, false);
         recyclerView = view.findViewById(R.id.truyen_moi);
+        tim_the_loai = view.findViewById(R.id.tim_the_loai);
         linearLayout1 = view.findViewById(R.id.layout_truyen_moi);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         truyenList = new ArrayList<>();
@@ -70,6 +73,8 @@ public class trang_chu extends Fragment {
         viewPager2 = view.findViewById(R.id.anh_dau);
         tim_k = view.findViewById(R.id.tim_kiem);
         truyen_moi = view.findViewById(R.id.truyen_moi_tt);
+
+
         tim_k.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +89,14 @@ public class trang_chu extends Fragment {
                 startActivity(intent);
             }
         });
+        tim_the_loai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), tim_the_loai.class);
+                intent.putExtra("show",1);
+                startActivity(intent);
+            }
+        });
         linearLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,13 +105,6 @@ public class trang_chu extends Fragment {
             }
         });
         //test chuyeenr trang
-
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://t.lixitet.top/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        apiService = retrofit.create(ApiService.class);
 
         sliderRunnable = new Runnable() {
             @Override
@@ -112,11 +118,11 @@ public class trang_chu extends Fragment {
                         i = 0;
                     }
                     viewPager2.setCurrentItem(i, true);
-                    sliderHandler.postDelayed(this, 5000);
+                    sliderHandler.postDelayed(this, 10000);
                 }
             }
         };
-        sliderHandler.postDelayed(sliderRunnable, 5000);
+        sliderHandler.postDelayed(sliderRunnable, 10000);
         // Inflate the layout for this fragment
         fetchTruyenData();
         imageslider();
@@ -124,6 +130,7 @@ public class trang_chu extends Fragment {
     }
 
     private void imageslider() {
+        ApiService apiService = RetrofitClient.getApiService();
         Call<List<truyen>> call = apiService.getanhslide();
         call.enqueue(new Callback<List<truyen>>() {
             @Override
@@ -137,12 +144,13 @@ public class trang_chu extends Fragment {
 
             @Override
             public void onFailure(Call<List<truyen>> call, Throwable t) {
-
+                Log.e("ERROR","Loi khi goi api: " + t.getMessage());
             }
         });
     }
 
     private void fetchTruyenData() {
+        ApiService apiService = RetrofitClient.getApiService();
         Call<List<truyen>> call = apiService.gettruyen();
         call.enqueue(new Callback<List<truyen>>() {
             @Override

@@ -4,11 +4,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-
-        android:id="@+id/icon_tim"
+        android:id="@+id/icon_loc"
+        android:icon="@drawable/search"
+        android:title="tìm kiếm"
+        app:iconSize="14dp"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/icon_tim_1"
         android:icon="@drawable/search"
         android:title="tìm kiếm"
         app:showAsAction="ifRoom"
-        />
+        /><item
+
+    android:id="@+id/icon_tim_2"
+    android:icon="@drawable/search"
+    android:title="tìm kiếm"
+    app:showAsAction="ifRoom"
+    />
 
 </menu>

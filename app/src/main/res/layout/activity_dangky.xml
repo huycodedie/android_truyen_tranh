@@ -16,36 +16,45 @@
         tools:layout_editor_absoluteY="56dp">
 
         <EditText
+            android:paddingStart="15dp"
             android:id="@+id/dk_tk"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/background_bo_goc"
             android:hint="Tên đăng nhập" />
 
         <EditText
+            android:paddingStart="15dp"
             android:id="@+id/dk_mk"
             android:layout_marginTop="20dp"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/background_bo_goc"
             android:hint="Mật khẩu" />
 
         <EditText
+            android:paddingStart="15dp"
             android:id="@+id/dk_xn_mk"
             android:layout_marginTop="20dp"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/background_bo_goc"
             android:hint="Xác nhận mật khẩu" />
 
         <EditText
+            android:paddingStart="15dp"
             android:id="@+id/dk_email"
             android:layout_marginTop="20dp"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/background_bo_goc"
             android:hint="Email" />
         <Button
             android:id="@+id/button_dk"
             android:layout_marginTop="70dp"
-            android:layout_width="300dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/background_bo_goc_button"
             android:text="Đăng ký"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

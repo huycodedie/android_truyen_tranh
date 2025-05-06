@@ -32,7 +32,10 @@ public class charter extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_charter, container, false);
         recyclerView = view.findViewById(R.id.view_so_chuong);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
         tong_chuong = view.findViewById(R.id.tong_chuong);
         Truyenviewmodel viewModel = new ViewModelProvider(requireActivity()).get(Truyenviewmodel.class);
         viewModel.gettruyenchitiet().observe(getViewLifecycleOwner(), truyen -> {

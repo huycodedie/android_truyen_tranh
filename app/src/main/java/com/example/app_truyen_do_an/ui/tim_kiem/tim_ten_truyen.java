@@ -17,8 +17,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_truyen_do_an.Adapter.timtentruyenadapter;
 import com.example.app_truyen_do_an.Adapter.timtheloaiadapter;
 import com.example.app_truyen_do_an.R;
 import com.example.app_truyen_do_an.api.ApiService;
@@ -35,7 +37,7 @@ public class tim_ten_truyen extends AppCompatActivity {
     private EditText nhap_ten;
     private ImageView xoa;
     private RecyclerView recyclerView;
-    private timtheloaiadapter timtheloaiadapter;
+    private timtentruyenadapter timtentruyenadapter;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -47,7 +49,7 @@ public class tim_ten_truyen extends AppCompatActivity {
         xoa = findViewById(R.id.xoa);
 
         recyclerView= findViewById(R.id.view_ten);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         xoa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,14 +79,14 @@ public class tim_ten_truyen extends AppCompatActivity {
 
     private void gettimtentruyen() {
         String nhapten = nhap_ten.getText().toString().trim();
-        ApiService apiService = RetrofitClient.getClient("https://t.lixitet.top/").create(ApiService.class);
+        ApiService apiService = RetrofitClient.getApiService();
         Call<List<truyen>> call = apiService.getTimKiemtentruyen(nhapten);
         call.enqueue(new Callback<List<truyen>>() {
             @Override
             public void onResponse(Call<List<truyen>> call, Response<List<truyen>> response) {
                 List<truyen> list = response.body();
-                timtheloaiadapter = new timtheloaiadapter(list,tim_ten_truyen.this);
-                recyclerView.setAdapter(timtheloaiadapter);
+                timtentruyenadapter = new timtentruyenadapter(list,tim_ten_truyen.this);
+                recyclerView.setAdapter(timtentruyenadapter);
             }
 
             @Override

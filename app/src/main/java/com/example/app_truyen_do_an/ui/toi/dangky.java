@@ -32,7 +32,6 @@ import retrofit2.Response;
 public class dangky extends AppCompatActivity {
     private EditText a1,a2,a3,a4;
     private Button bt1;
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,15 +106,12 @@ public class dangky extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Đăng ký tài khoản");
         actionBar.setDisplayHomeAsUpEnabled(true);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+
     }
 
     private void dangkytk(String tk, String xnmk, String email) {
-        ApiService apiService = RetrofitClient.getClient("https://t.lixitet.top/").create(ApiService.class);
+        ApiService apiService = RetrofitClient.getApiService();
         Call<usernhan> call = apiService.dangky(tk, xnmk, email);
         call.enqueue(new Callback<usernhan>() {
             @Override

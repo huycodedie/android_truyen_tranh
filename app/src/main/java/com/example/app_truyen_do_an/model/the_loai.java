@@ -1,6 +1,8 @@
 package com.example.app_truyen_do_an.model;
 
-public class the_loai {
+import java.io.Serializable;
+
+public class the_loai implements Serializable {
     private String id_tl;
     private String the_loai;
     public the_loai(String id_tl,String the_loai){

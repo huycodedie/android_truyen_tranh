@@ -19,11 +19,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/anh_tt"
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/anh_truyen_tt"
                 android:layout_width="118dp"
                 android:layout_height="165dp"
-                android:src="@drawable/anh_truyen_moi" />
+                android:src="@drawable/anh_truyen_moi"
+                app:shapeAppearanceOverlay="@style/CircleImage_to"/>
 
             <LinearLayout
 
@@ -195,6 +196,7 @@
             android:gravity="center_vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/anh_tac_gia"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/anh_truyen_moi"

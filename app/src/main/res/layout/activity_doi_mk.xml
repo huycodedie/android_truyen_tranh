@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.toi.doi_mk">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-76dp"
+        tools:layout_editor_absoluteY="61dp">
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhập mật khẩu cũ: "
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/mk_cu"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="Nhập ..."
+                android:paddingStart="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/background_bo_goc" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="240dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhập mật khẩu mới: "
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/mk_moi"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="Nhập ..."
+                android:paddingStart="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/background_bo_goc" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhập lại mật khẩu mới: "
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/nhap_lai_mk"
+                android:layout_width="240dp"
+                android:layout_height="45dp"
+                android:hint="Nhập ..."
+                android:paddingStart="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/background_bo_goc" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="70dp">
+            <Button
+                android:id="@+id/xn_doi_mk"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/background_bo_goc_button"
+                android:text="Xác nhận đổi" />
+            <ProgressBar
+                android:layout_marginTop="10dp"
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:visibility="visible" />
+        </FrameLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

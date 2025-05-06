@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="70dp"
+
+    android:fitsSystemWindows="true"
     tools:context=".ui.profile_truyen.thong_tin_truyen">
 
 
@@ -39,19 +41,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
-        <Button
-            android:id="@+id/doc_tu_dau"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:background="@color/orange"
-            android:text="doc tu dau"/>
-        <Button
-            android:id="@+id/doc_tiep"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_orange_light"
-            android:textColor="@color/white"
-            android:text="doc tiep"/>
+
+            <Button
+                android:id="@+id/doc_tu_dau"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:background="@color/orange"
+                android:text="doc tu dau"/>
+            <Button
+                android:id="@+id/doc_tiep"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_orange_light"
+                android:textColor="@color/white"
+                android:text="doc tiep"/>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.toi.Thong_tin_tai_khoan">
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/anh_thong_tin"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/anh_truyen_moi"
+                app:shapeAppearanceOverlay="@style/CircleImage" />
+            <Button
+                android:id="@+id/btn_doi_anh"
+                android:background="@drawable/background_bo_goc_button"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="chọn ảnh mới"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên tài khoản: "
+                android:textSize="19dp" />
+            <EditText
+                android:id="@+id/ten_tk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="19dp"
+                android:hint="chưa có dữ liệu"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="19dp"
+                android:text="Số điện thoại: "/>
+            <EditText
+                android:id="@+id/sdt_tk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="19dp"
+                android:hint="chưa có dữ liệu"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="19dp"
+                android:text="Email: "/>
+            <EditText
+                android:id="@+id/email_tk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="19dp"
+                android:hint="chưa có dữ liệu"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="19dp"
+                android:text="Ngày tạo: "/>
+            <TextView
+                android:id="@+id/ngay_tao_tk"
+                android:layout_width="wrap_content"
+                android:textSize="19dp"
+                android:layout_height="wrap_content"
+                android:text=""/>
+        </LinearLayout>
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/sua_thong_tin"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_bo_goc_button"
+            android:text="lưu thông tin sửa"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
