@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,47 +41,80 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class toi extends Fragment {
-    private EditText name_user, Password;
-    private TextView ten_user, emai,a1, a2, lay_lai_mk;
-    private Button bt1;
-    private LinearLayout lay_dang_nhap,thong_tin ,linearLayout, thong_tin_tai_khoan, doi_mat_khau, thong_tin_user;
+    private EditText name_tai_khoan_dang_nhap, Password;
+    private TextView ten_user, emai, dang_ky, lay_lai_mk;
+    private Button dang_nhap;
+    private LinearLayout layout_dang_nhap,layout_thong_tin ,dang_xuat, thong_tin_tai_khoan, doi_mat_khau, thong_tin_user;
     private SharedPreferences sharedPreferences;
     private ProgressBar progressBar;
-    private ImageView xoa_user, xoa_password, anh_toi;
+    private ImageView xoa_tai_khoan_dang_nhap, xoa_password, anh_tai_khoan;
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_toi, container, false);
-        name_user = view.findViewById(R.id.name_user);
-        Password = view.findViewById(R.id.Password);
-        bt1 = view.findViewById(R.id.butdangnhap);
+        //trước khi đăng nhập
+        name_tai_khoan_dang_nhap = view.findViewById(R.id.name_tai_khoan_dang_nhap);
+        Password = view.findViewById(R.id.nhap_Password);
+        dang_nhap = view.findViewById(R.id.butdangnhap);
         progressBar = view.findViewById(R.id.progressBar);
-        a1 = view.findViewById(R.id.dang_nhap_dk_1);
-        a2 = view.findViewById(R.id.dang_nhap_dk_2);
-        anh_toi = view.findViewById(R.id.anh_toi);
+        lay_lai_mk = view.findViewById(R.id.lay_lai_mk);
+
+        //sau khi đăng nhâp
+        dang_ky = view.findViewById(R.id.dang_ky);
+        anh_tai_khoan = view.findViewById(R.id.anh_tai_khoan);
         thong_tin_user = view.findViewById(R.id.thong_tin_user);
         ten_user = view.findViewById(R.id.ten_user);
-        lay_lai_mk = view.findViewById(R.id.lay_lai_mk);
         emai = view.findViewById(R.id.email);
-        lay_dang_nhap = view.findViewById(R.id.dang_nhap);
+        layout_dang_nhap = view.findViewById(R.id.layout_dang_nhap);
         doi_mat_khau = view.findViewById(R.id.doi_mat_khau);
         thong_tin_tai_khoan = view.findViewById(R.id.thong_tin_tai_khoan);
-        thong_tin = view.findViewById(R.id.thong_tin);
+        layout_thong_tin = view.findViewById(R.id.layout_thong_tin);
         xoa_password = view.findViewById(R.id.xoa_password);
-        xoa_user = view.findViewById(R.id.xoa_user);
-        linearLayout = view.findViewById(R.id.dang_xuat);
+        xoa_tai_khoan_dang_nhap = view.findViewById(R.id.xoa_tai_khoan_dang_nhap);
+        dang_xuat = view.findViewById(R.id.dang_xuat);
+
+        // dùng để lưu dữ liệu android
         sharedPreferences = requireActivity().getSharedPreferences("Myapp", Context.MODE_PRIVATE);
         checklogin();
 
-        linearLayout.setOnClickListener(v -> {
+
+        name_tai_khoan_dang_nhap.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    xoa_tai_khoan_dang_nhap.setVisibility(View.VISIBLE);
+                }else {
+                    xoa_tai_khoan_dang_nhap.setVisibility(View.GONE);
+                }
+            }
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void afterTextChanged(Editable s) {}
+        });
+        Password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    xoa_password.setVisibility(View.VISIBLE);
+                }else {
+                    xoa_password.setVisibility(View.GONE);
+                }
+            }
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void afterTextChanged(Editable s) {}
+        });
+
+        //đăng xuất tài khoản
+        dang_xuat.setOnClickListener(v -> {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.apply();
 
-            lay_dang_nhap.setVisibility(View.VISIBLE);
-            thong_tin.setVisibility(View.GONE);
+            layout_dang_nhap.setVisibility(View.VISIBLE);
+            layout_thong_tin.setVisibility(View.GONE);
         });
+        // lấy lại mật khẩu hiện tại chưa có tác dụng gì chỉ có tác dụng mở link
         lay_lai_mk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,23 +124,26 @@ public class toi extends Fragment {
                 startActivity(intent);
             }
         });
-        bt1.setOnClickListener(v -> {
+
+        // hiệu ứng button khi nhấn đăng nhập và chạy dữ liệu vào formlogin để kiểm tra dữ liệu tài khoản và mật khẩu
+        //và trả dữ liệu
+        dang_nhap.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
-            bt1.setVisibility(View.GONE);
-            String username = name_user.getText().toString().trim();
+            dang_nhap.setVisibility(View.GONE);
+            String username = name_tai_khoan_dang_nhap.getText().toString().trim();
             String password = Password.getText().toString().trim();
             if (username.isEmpty()){
-                name_user.setError("Vui lòng nhập tài khoản");
-                name_user.requestFocus();
+                name_tai_khoan_dang_nhap.setError("Vui lòng nhập tài khoản");
+                name_tai_khoan_dang_nhap.requestFocus();
                 progressBar.setVisibility(View.GONE);
-                bt1.setVisibility(View.VISIBLE);
+                dang_nhap.setVisibility(View.VISIBLE);
                 return;
             }
             if (password.isEmpty()){
                 Password.setError("Vui lòng nhập mật khẩu");
                 Password.requestFocus();
                 progressBar.setVisibility(View.GONE);
-                bt1.setVisibility(View.VISIBLE);
+                dang_nhap.setVisibility(View.VISIBLE);
                 return;
             }
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
@@ -114,24 +153,19 @@ public class toi extends Fragment {
                 }
             }, 1000);
         });
-        a1.setOnClickListener(new View.OnClickListener() {
+        // set chuyển trang khác
+        dang_ky.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireContext(), dangky.class);
                 startActivity(intent);
             }
         });
-        a2.setOnClickListener(new View.OnClickListener() {
+        //set xóa dữ liệu text
+        xoa_tai_khoan_dang_nhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), dangky.class);
-                startActivity(intent);
-            }
-        });
-        xoa_user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name_user.setText("");
+                name_tai_khoan_dang_nhap.setText("");
             }
         });
         xoa_password.setOnClickListener(new View.OnClickListener() {
@@ -142,8 +176,10 @@ public class toi extends Fragment {
         });
         return view;
     }
+
+    //chạy formlogin gửi dữ liệu vào api trả về dữ liệu và lưu dữ liệu vào SharedPreferences
     private void formlogin() {
-        String username = name_user.getText().toString().trim();
+        String username = name_tai_khoan_dang_nhap.getText().toString().trim();
         String password = Password.getText().toString().trim();
         ApiService apiService = RetrofitClient.getApiService();
         usergui request = new usergui(username,password);
@@ -163,17 +199,17 @@ public class toi extends Fragment {
                     editor.putString("ngay_tao", response.body().getNgay_tao());
                     editor.putInt("quyen",response.body().getQuyen());
                     editor.apply();
-                    lay_dang_nhap.setVisibility(View.GONE);
-                    thong_tin.setVisibility(View.VISIBLE);
+                    layout_dang_nhap.setVisibility(View.GONE);
+                    layout_thong_tin.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
-                    bt1.setVisibility(View.VISIBLE);
+                    dang_nhap.setVisibility(View.VISIBLE);
                     BottomNavigationView navView = getActivity().findViewById(R.id.nav_view);
                     navView.setSelectedItemId(R.id.navigation_trang_chu);
                     Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                 }else {
                     Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                     progressBar.setVisibility(View.GONE);
-                    bt1.setVisibility(View.VISIBLE);
+                    dang_nhap.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -183,7 +219,7 @@ public class toi extends Fragment {
             }
         });
     }
-
+    // xuất dữ liệu ra màn hình lấy dữ liệu đã đực lưu vào SharedPreferences
     private void checklogin() {
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn",false);
         String username = sharedPreferences.getString("username", "");
@@ -195,11 +231,11 @@ public class toi extends Fragment {
         String sdt = sharedPreferences.getString("sdt","");
         String ngay_tao = sharedPreferences.getString("ngay_tao","");
         if (isLoggedIn){
-            if (quyen==3){
+            if (quyen==2){
                 thong_tin_user.setVisibility(View.VISIBLE);
             }
-            lay_dang_nhap.setVisibility(View.GONE);
-            thong_tin.setVisibility(View.VISIBLE);
+            layout_dang_nhap.setVisibility(View.GONE);
+            layout_thong_tin.setVisibility(View.VISIBLE);
             if (name == null || name.isEmpty() || name.equals("null")){
                 ten_user.setText(username);
             }else {
@@ -209,12 +245,13 @@ public class toi extends Fragment {
             Glide.with(getContext())
                     .load(anh_to)
                     .error(R.drawable.anh_truyen_moi)
-                    .into(anh_toi);
+                    .into(anh_tai_khoan);
         }else {
-            lay_dang_nhap.setVisibility(View.VISIBLE);
-            thong_tin.setVisibility(View.GONE);
+            layout_dang_nhap.setVisibility(View.VISIBLE);
+            layout_thong_tin.setVisibility(View.GONE);
 
         }
+        //set chuyển trang
         doi_mat_khau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,6 +261,7 @@ public class toi extends Fragment {
                 startActivity(intent);
             }
         });
+        //set chuyển trang
         thong_tin_tai_khoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

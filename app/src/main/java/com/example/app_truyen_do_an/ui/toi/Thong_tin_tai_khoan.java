@@ -40,8 +40,8 @@ import retrofit2.Response;
 public class Thong_tin_tai_khoan extends AppCompatActivity {
     private ImageView anh_thong_tin;
     private int id_user;
-    private Button bt1;
-    private String s1,s2,s3,s4,s5;
+    private Button sua_thong_tin;
+    private String anh,name,email,ngay_tao,sdt;
     private EditText ten_tk,sdt_tk,email_tk;
     private TextView ngay_tao_tk;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -54,31 +54,31 @@ public class Thong_tin_tai_khoan extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_thong_tin_tai_khoan);
         anh_thong_tin = findViewById(R.id.anh_thong_tin);
-        bt1 = findViewById(R.id.sua_thong_tin);
+        sua_thong_tin = findViewById(R.id.sua_thong_tin);
         ten_tk = findViewById(R.id.ten_tk);
         sdt_tk = findViewById(R.id.sdt_tk);
         email_tk = findViewById(R.id.email_tk);
         ngay_tao_tk = findViewById(R.id.ngay_tao_tk);
         id_user = getIntent().getIntExtra("id_user",-1);
-        s1 = getIntent().getStringExtra("anh");
-        s2 = getIntent().getStringExtra("name");
-        s3 = getIntent().getStringExtra("email");
-        s4 = getIntent().getStringExtra("ngay_tao");
-        s5 = getIntent().getStringExtra("sdt");
+        anh = getIntent().getStringExtra("anh");
+        name = getIntent().getStringExtra("name");
+        email = getIntent().getStringExtra("email");
+        ngay_tao = getIntent().getStringExtra("ngay_tao");
+        sdt = getIntent().getStringExtra("sdt");
 
         Glide.with(Thong_tin_tai_khoan.this)
-                .load(s1)
+                .load(anh)
                 .error(R.drawable.anh_truyen_moi)
                 .into(anh_thong_tin);
-        ten_tk.setText(s2);
-        sdt_tk.setText(s5);
-        email_tk.setText(s3);
-        ngay_tao_tk.setText(s4);
+        ten_tk.setText(name);
+        sdt_tk.setText(sdt);
+        email_tk.setText(email);
+        ngay_tao_tk.setText(ngay_tao);
         Button btn_doi_anh = findViewById(R.id.btn_doi_anh);
         btn_doi_anh.setOnClickListener(v -> {
             mothuvienanh();
         });
-        bt1.setOnClickListener(v -> {
+        sua_thong_tin.setOnClickListener(v -> {
             String tk = ten_tk.getText().toString().trim();
             String sdt = sdt_tk.getText().toString().trim();
             String email = email_tk.getText().toString().trim();

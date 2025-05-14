@@ -30,73 +30,73 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class dangky extends AppCompatActivity {
-    private EditText a1,a2,a3,a4;
-    private Button bt1;
+    private EditText dk_tk,dk_mk,dk_xn_mk,dk_email;
+    private Button button_dk;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dangky);
-        a1 = findViewById(R.id.dk_tk);
-        a2 = findViewById(R.id.dk_mk);
-        a3 = findViewById(R.id.dk_xn_mk);
-        a4 = findViewById(R.id.dk_email);
-        bt1 = findViewById(R.id.button_dk);
-        bt1.setOnClickListener(v -> {
-            String tk = a1.getText().toString().trim();
-            String mk = a2.getText().toString().trim();
-            String xnmk = a3.getText().toString().trim();
-            String email = a4.getText().toString().trim();
+        dk_tk = findViewById(R.id.dk_tk);
+        dk_mk = findViewById(R.id.dk_mk);
+        dk_xn_mk = findViewById(R.id.dk_xn_mk);
+        dk_email = findViewById(R.id.dk_email);
+        button_dk = findViewById(R.id.button_dk);
+        button_dk.setOnClickListener(v -> {
+            String tk = dk_tk.getText().toString().trim();
+            String mk = dk_mk.getText().toString().trim();
+            String xnmk = dk_xn_mk.getText().toString().trim();
+            String email = dk_email.getText().toString().trim();
             String specialCharPattern = ".*[!@#$%^&*()_+=|<>?{}\\[\\]~-].*";
             String emailxn = ".*[@.].*";
 
             if (tk.isEmpty()){
-                a1.setError("Vui lòng nhập tài khoản");
-                a1.requestFocus();
+                dk_tk.setError("Vui lòng nhập tài khoản");
+                dk_tk.requestFocus();
                 return;
             }
             if (tk.length() <= 5 || tk.length() >= 25) {
-                a1.setError("Vui lòng nhập tài khoản có độ dài từ 6 - 25 ký tự");
-                a1.requestFocus();
+                dk_tk.setError("Vui lòng nhập tài khoản có độ dài từ 6 - 25 ký tự");
+                dk_tk.requestFocus();
                 return;
             }
             if (tk.matches(specialCharPattern)) {
-                a1.setError("Vui lòng nhập tài khoản không có ký tự đặc biệt");
-                a1.requestFocus();
+                dk_tk.setError("Vui lòng nhập tài khoản không có ký tự đặc biệt");
+                dk_tk.requestFocus();
                 return;
             }
             if (mk.isEmpty()) {
-                a2.setError("Vui lòng nhập mật khẩu");
-                a2.requestFocus();
+                dk_mk.setError("Vui lòng nhập mật khẩu");
+                dk_mk.requestFocus();
                 return;
             }
             if (mk.length() <= 5 || mk.length() >= 25) {
-                a2.setError("Vui lòng nhập mật khẩu có độ dài từ 6 - 25 ký tự");
-                a2.requestFocus();
+                dk_mk.setError("Vui lòng nhập mật khẩu có độ dài từ 6 - 25 ký tự");
+                dk_mk.requestFocus();
                 return;
             }
             if (mk.matches(specialCharPattern)) {
-                a2.setError("Vui lòng nhập mật khẩu không có ký tự đặc biệt");
-                a2.requestFocus();
+                dk_mk.setError("Vui lòng nhập mật khẩu không có ký tự đặc biệt");
+                dk_mk.requestFocus();
                 return;
             }
             if (!mk.equals(xnmk)) {
-                a3.setError("Xác nhận mật khẩu không khớp");
-                a3.requestFocus();
+                dk_xn_mk.setError("Xác nhận mật khẩu không khớp");
+                dk_xn_mk.requestFocus();
                 return;
             }
             if (email.isEmpty()) {
-                a4.setError("Vui lòng nhập email");
-                a4.requestFocus();
+                dk_email.setError("Vui lòng nhập email");
+                dk_email.requestFocus();
                 return;
             }
             if (email.length() <= 5 || email.length() >= 25) {
-                a4.setError("Vui lòng đúng định dạng");
-                a4.requestFocus();
+                dk_email.setError("Vui lòng đúng định dạng");
+                dk_email.requestFocus();
                 return;
             }if (!email.matches(emailxn)) {
-                a4.setError("Vui lòng đúng định dạng");
-                a4.requestFocus();
+                dk_email.setError("Vui lòng đúng định dạng");
+                dk_email.requestFocus();
                 return;
             }
             dangkytk(tk,xnmk,email);
@@ -118,6 +118,16 @@ public class dangky extends AppCompatActivity {
             public void onResponse(Call<usernhan> call, Response<usernhan> response) {
                 usernhan user = response.body();
                 Toast.makeText(dangky.this, user.getMessage(), Toast.LENGTH_LONG).show();
+                if (user != null) {
+
+                    Toast.makeText(dangky.this,user.getMessage(), Toast.LENGTH_LONG).show();
+
+                    if ("Đăng ký thành công".equals(user.getMessage())) {
+                        onBackPressed();
+                    }
+                } else {
+                    Toast.makeText(dangky.this, user.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

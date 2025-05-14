@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_toi"
+    android:background="@color/white"
     tools:context=".ui.toi.toi">
 
     <LinearLayout
-        android:visibility="visible"
-        android:id="@+id/dang_nhap"
+        android:visibility="gone"
+        android:id="@+id/layout_dang_nhap"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -51,16 +52,19 @@
             android:layout_marginTop="35dp">
             <EditText
                 android:padding="10dp"
-                android:id="@+id/name_user"
+                android:id="@+id/name_tai_khoan_dang_nhap"
                 android:hint="nhập tên tài khoản"
-                android:layout_width="310dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black"
                 android:background="@android:color/transparent"
                 android:layout_height="wrap_content"/>
             <ImageView
-                android:id="@+id/xoa_user"
+                android:id="@+id/xoa_tai_khoan_dang_nhap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:layout_marginEnd="12dp"
+                android:visibility="gone"
                 android:src="@drawable/baseline_close_24"/>
         </LinearLayout>
 
@@ -72,11 +76,13 @@
             android:layout_height="wrap_content">
             <EditText
                 android:padding="10dp"
-                android:id="@+id/Password"
+                android:id="@+id/nhap_Password"
                 android:background="@android:color/transparent"
                 android:layout_width="310dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ems="10"
+                android:textColor="@color/black"
                 app:passwordToggleEnabled="true"
                 app:counterMaxLength="10"
                 android:hint="nhập mật khẩu"
@@ -85,6 +91,8 @@
                 android:id="@+id/xoa_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:visibility="gone"
                 android:src="@drawable/baseline_close_24"/>
         </LinearLayout>
         <FrameLayout
@@ -111,33 +119,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/dang_nhap_dk_1"
+                android:id="@+id/dang_ky"
                 android:layout_marginEnd="40dp"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Đăng ký tài khoản"/>
             <TextView
                 android:id="@+id/lay_lai_mk"
                 android:layout_marginStart="40dp"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lấy lại mât khẩu ?"/>
         </LinearLayout>
-        <TextView
-            android:id="@+id/dang_nhap_dk_2"
-            android:layout_marginTop="35dp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Bạn chưa có tài khoản? hãy đăng ký->"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/thong_tin"
+        android:id="@+id/layout_thong_tin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         android:padding="18dp">
 
         <LinearLayout
@@ -146,7 +149,7 @@
             android:gravity="center_vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/anh_toi"
+                android:id="@+id/anh_tai_khoan"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/anh_truyen_moi"
@@ -175,7 +178,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:background="@color/white"
+            android:background="@drawable/background_bo_goc"
             android:padding="10dp"
             android:layout_marginTop="40dp"
             android:layout_width="match_parent"
