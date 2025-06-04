@@ -16,6 +16,7 @@ public class truyen {
     private String tong_chuong;
     private List<Chuong> chuong;
     private int luu;
+    private String tong_truyen_theo_doi;
     private List<the_loai> the_loai;
     public truyen(String id_truyen, String name_truyen,
                   String name_tac_gia, String anh,String luot_xem, int trang_thai, String gioi_thieu,String tong_chuong, String ngay_dang, List<String> the_loai, int luu){
@@ -33,6 +34,10 @@ public class truyen {
 
     public String getId_truyen() {
         return id_truyen;
+    }
+
+    public String getTong_truyen_theo_doi() {
+        return tong_truyen_theo_doi;
     }
 
     public String getName_truyen() {

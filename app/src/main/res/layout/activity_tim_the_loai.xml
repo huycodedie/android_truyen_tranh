@@ -19,7 +19,7 @@
             android:background="@android:color/holo_orange_light">
             <TextView
                 android:id="@+id/text_bar_tim_tl"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:textSize="13dp"
                 android:textColor="@color/white"
@@ -34,20 +34,21 @@
                     android:id="@+id/icon_loc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_home_black_24dp"/>
-                <ImageView
-                    android:id="@+id/icon_xap_sep_1"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_home_black_24dp"/>
-                <ImageView
-                    android:id="@+id/icon_xap_sep_2"
                     android:layout_marginEnd="30dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_home_black_24dp"/>
+                    android:src="@drawable/ic_dashboard_black_24dp"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/icon_xap_sep_1"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_home_black_24dp"/>-->
+<!--                <ImageView-->
+<!--                    android:id="@+id/icon_xap_sep_2"-->
+<!--                    android:layout_marginEnd="30dp"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_home_black_24dp"/>-->
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 

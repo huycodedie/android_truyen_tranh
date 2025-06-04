@@ -11,7 +11,7 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/anh_truyen"
         android:layout_width="100dp"
-        android:layout_height="130dp"
+        android:layout_height="140dp"
         android:background="@drawable/anh_truyen_moi"
         android:scaleType="centerCrop"
         app:shapeAppearanceOverlay="@style/CircleImage_to"/>
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Chapter 1"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/black"
         android:textSize="12sp" />
 
 </LinearLayout>

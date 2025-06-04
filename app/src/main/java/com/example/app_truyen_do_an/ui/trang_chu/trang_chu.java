@@ -7,10 +7,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
@@ -47,17 +49,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class trang_chu extends Fragment {
-
-    private RecyclerView recyclerView;
-    private TruyenAdapter truyenAdapter;
-    private List<truyen> truyenList;
-    private List<Chuong> chuongList;
+    private RecyclerView recyclerView,recyclerView_manhwa;
+    private TruyenAdapter truyenAdapter,truyen_ManhwaAdapter;
+    private List<truyen> truyenList, truyen_manhwaList;
     private ViewPager2 viewPager2;
     private Handler sliderHandler = new Handler();
     private Runnable sliderRunnable;
     private int i = 0;
-    private LinearLayout linearLayout1,tim_the_loai;
+    private NestedScrollView layout_view;
+    private LinearLayout linearLayout1,tim_the_loai,layout_bao_loi;
     private ImageView tim_k, truyen_moi;
+    private SwipeRefreshLayout swipeRefreshLayout;
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@NonNull ViewGroup container,@NonNull
@@ -66,10 +68,30 @@ public class trang_chu extends Fragment {
         recyclerView = view.findViewById(R.id.truyen_moi);
         tim_the_loai = view.findViewById(R.id.tim_the_loai);
         linearLayout1 = view.findViewById(R.id.layout_truyen_moi);
+        layout_view = view.findViewById(R.id.layput_view);
+        layout_bao_loi = view.findViewById(R.id.layout_bao_loi);
+        swipeRefreshLayout = view.findViewById(R.id.refreshlayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchTruyenData();
+                imageslider();
+                truyenmanhwa();
+            }
+        });
+        //truyện mới
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         truyenList = new ArrayList<>();
         truyenAdapter = new TruyenAdapter(getContext(), truyenList);
         recyclerView.setAdapter(truyenAdapter);
+
+        //truyện manhwa
+        recyclerView_manhwa = view.findViewById(R.id.truyen_Manhwa);
+        recyclerView_manhwa.setLayoutManager(new GridLayoutManager(getContext(),3));
+        truyen_manhwaList = new ArrayList<>();
+        truyen_ManhwaAdapter = new TruyenAdapter(getContext(),truyen_manhwaList);
+        recyclerView_manhwa.setAdapter(truyen_ManhwaAdapter);
+
         viewPager2 = view.findViewById(R.id.anh_dau);
         tim_k = view.findViewById(R.id.tim_kiem);
         truyen_moi = view.findViewById(R.id.truyen_moi_tt);
@@ -126,7 +148,29 @@ public class trang_chu extends Fragment {
         // Inflate the layout for this fragment
         fetchTruyenData();
         imageslider();
+        truyenmanhwa();
         return view;
+    }
+
+    private void truyenmanhwa() {
+        ApiService apiService = RetrofitClient.getApiService();
+        Call<List<truyen>> call = apiService.getTimKiemTheLoai1(String.valueOf(24));
+        call.enqueue(new Callback<List<truyen>>() {
+            @Override
+            public void onResponse(Call<List<truyen>> call, Response<List<truyen>> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    truyen_manhwaList.clear();
+                    List<truyen> allTruyen = response.body();
+                    List<truyen> limitedTruyen = allTruyen.size() > 3 ? allTruyen.subList(0, 9) : allTruyen;
+                    truyen_manhwaList.addAll(limitedTruyen);
+                    truyen_ManhwaAdapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<truyen>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void imageslider() {
@@ -139,12 +183,19 @@ public class trang_chu extends Fragment {
                     List<truyen> list = response.body();
                     ImageSliderAdapter adapter = new ImageSliderAdapter(list, getContext());
                     viewPager2.setAdapter(adapter);
+                    layout_bao_loi.setVisibility(View.GONE);
+                    layout_view.setVisibility(View.VISIBLE);
+                    swipeRefreshLayout.setRefreshing(false);
+                }else {
+                    layout_bao_loi.setVisibility(View.VISIBLE);
+                    layout_view.setVisibility(View.GONE);
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<List<truyen>> call, Throwable t) {
-                Log.e("ERROR","Loi khi goi api: " + t.getMessage());
+
             }
         });
     }
@@ -158,7 +209,7 @@ public class trang_chu extends Fragment {
                 if(response.isSuccessful() && response.body() != null){
                     truyenList.clear();
                     List<truyen> allTruyen = response.body();
-                    List<truyen> limitedTruyen = allTruyen.size() > 3 ? allTruyen.subList(0, 6) : allTruyen;
+                    List<truyen> limitedTruyen = allTruyen.size() > 3 ? allTruyen.subList(0, 9) : allTruyen;
                     truyenList.addAll(limitedTruyen);
                     truyenAdapter.notifyDataSetChanged();
                 }
@@ -166,7 +217,6 @@ public class trang_chu extends Fragment {
 
             @Override
             public void onFailure(Call<List<truyen>> call, Throwable t) {
-                Log.e("ERROR","Loi khi goi api: " + t.getMessage());
 
             }
         });

@@ -16,7 +16,8 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:layout_height="wrap_content">
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -27,32 +28,34 @@
                 app:shapeAppearanceOverlay="@style/CircleImage_to"/>
 
             <LinearLayout
-
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/ten_truyen_tt"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="Tên truyên tranh"
+                    android:text=""
                     android:textSize="17dp" />
 
                 <TextView
                     android:id="@+id/tien_do"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
-                    android:text="đang tiến hành"
+                    android:text=""
                     android:textSize="14dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="65dp"
                     android:gravity="center_vertical">
 
                     <ImageView
@@ -61,15 +64,26 @@
                         android:layout_height="35dp"
                         android:layout_marginStart="8dp"
                         android:src="@drawable/luu" />
-
                 </LinearLayout>
+
             </LinearLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/xoa_tt"
+                android:layout_width="30dp"
+                android:visibility="gone"
+                android:layout_height="30dp"
+                android:tint="@color/white"
+                android:background="@color/got"
+                android:src="@drawable/xoa"
+                app:shapeAppearanceOverlay="@style/CircleImage" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:background="@color/orange"
             android:gravity="center_vertical">
@@ -96,20 +110,21 @@
 
         <LinearLayout
             android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="22dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tong_theo_doi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="300"
+                    android:text=""
                     android:textSize="17dp" />
 
                 <TextView
@@ -120,9 +135,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="22dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -130,7 +145,7 @@
                     android:id="@+id/luot_xem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="300"
+                    android:text=""
                     android:textSize="17dp" />
 
                 <TextView
@@ -141,43 +156,23 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="22dp"
                 android:gravity="center"
-
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@id/tong_chuong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="300"
+                    android:text=""
                     android:textSize="17dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chapter" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="22dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="300"
-                    android:textSize="17dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bình luận" />
+                    android:text="Chương" />
 
             </LinearLayout>
 
@@ -207,7 +202,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="name tác giả"
+                android:text=""
                 android:textSize="17dp" />
         </LinearLayout>
 
@@ -234,7 +229,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="heo lo" />
+            android:text="" />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

@@ -20,6 +20,8 @@ import com.example.app_truyen_do_an.R;
 import com.example.app_truyen_do_an.model.Chuong;
 import com.example.app_truyen_do_an.model.Truyenviewmodel;
 
+import java.util.List;
+
 public class charter extends Fragment {
     private RecyclerView recyclerView;
     private ChuongAdapter chuongAdapter;
@@ -39,12 +41,23 @@ public class charter extends Fragment {
         tong_chuong = view.findViewById(R.id.tong_chuong);
         Truyenviewmodel viewModel = new ViewModelProvider(requireActivity()).get(Truyenviewmodel.class);
         viewModel.gettruyenchitiet().observe(getViewLifecycleOwner(), truyen -> {
-            if (truyen != null && truyen.getChuong() != null) {
-                chuongAdapter = new ChuongAdapter(truyen.getChuong(),truyen.getId_truyen());
+            if (truyen != null && isValidChuongList(truyen.getChuong())) {
+                chuongAdapter = new ChuongAdapter(truyen.getChuong(),truyen.getId_truyen(),truyen.getAnh(),getContext());
                 recyclerView.setAdapter(chuongAdapter);
-                tong_chuong.setText("Tổng số "+ truyen.getTong_chuong()+" chương");
             }
+            tong_chuong.setText("Tổng số "+ truyen.getTong_chuong()+" chương");
         });
         return view;
     }
+    private boolean isValidChuongList(List<Chuong> list) {
+        if (list == null || list.isEmpty()) return false;
+
+        for (Chuong c : list) {
+            if (c.getId_chuong() != null && !c.getId_chuong().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

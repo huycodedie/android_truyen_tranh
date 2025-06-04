@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,8 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_truyen_do_an.Adapter.anhAdapter;
@@ -28,7 +27,6 @@ import com.example.app_truyen_do_an.R;
 import com.example.app_truyen_do_an.api.ApiService;
 import com.example.app_truyen_do_an.api.RetrofitClient;
 import com.example.app_truyen_do_an.model.Chuong;
-import com.example.app_truyen_do_an.model.Truyenviewmodel;
 import com.example.app_truyen_do_an.model.anh;
 import com.example.app_truyen_do_an.model.truyen;
 
@@ -40,7 +38,8 @@ import retrofit2.Response;
 
 public class anhchuong extends AppCompatActivity {
     private truyen chuonga;
-    private String id_chuong, so_chuong, lui, tien;
+    private String  truoc,sau;
+    private String so_chuong;
     private String id_truyen;
     private ImageButton bt1, bt2;
     private anhAdapter anhAdapter;
@@ -51,19 +50,14 @@ public class anhchuong extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_anh);
-        id_chuong = getIntent().getStringExtra("id_chuong");
         so_chuong = getIntent().getStringExtra("chuong");
         id_truyen = getIntent().getStringExtra("id_truyen");
         bt2 = findViewById(R.id.btn_right);
         bt1 = findViewById(R.id.btn_left);
 
-        lui = String.valueOf(Integer.parseInt(so_chuong) - 1) ;
-        tien = String.valueOf(Integer.parseInt(so_chuong) + 1) ;
-        bt2.setOnClickListener(v -> {
-
-        });
         recyclerView = findViewById(R.id.recview_anh);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
         if (so_chuong != null  && id_truyen != null){
             getanh(so_chuong,id_truyen);
         }
@@ -71,7 +65,7 @@ public class anhchuong extends AppCompatActivity {
         actionBar.setTitle("chap: "+so_chuong);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        layttchuong(id_truyen);
+        layttchuong(id_truyen,so_chuong);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -81,7 +75,7 @@ public class anhchuong extends AppCompatActivity {
 
     }
 
-    private void layttchuong(String id) {
+    private void layttchuong(String id, String so_chuong) {
         ApiService apiService = RetrofitClient.getApiService();
         Call<List<truyen>> call = apiService.getChiTietTruyen1(id);
         call.enqueue(new Callback<List<truyen>>() {
@@ -89,7 +83,7 @@ public class anhchuong extends AppCompatActivity {
             public void onResponse(Call<List<truyen>> call, Response<List<truyen>> response) {
                 if (response.isSuccessful() && response.body() != null){
                     chuonga = response.body().get(0);
-                    xulychuong();
+                    xulychuong(so_chuong);
 
                 }
             }
@@ -101,39 +95,62 @@ public class anhchuong extends AppCompatActivity {
         });
     }
 
-    private void xulychuong() {
-        boolean coChuongleft = false;
-        boolean coChuongright = false;
-        for (Chuong chuonga : chuonga.getChuong()) {
-            if (chuonga.getso_Chuong().equals(lui)) {
-                coChuongleft = true;
-                break;
+    private Chuong xulychuong(String so_chuong) {
+        Chuong chuongTruoc = null;
+        Chuong chuongSau = null;
+        try {
+            float soHienTai = Float.parseFloat(so_chuong);
+            float maxThoaMan = Float.NEGATIVE_INFINITY;
+
+            for (Chuong chuong : chuonga.getChuong()) {
+                float soDangXet = Float.parseFloat(chuong.getso_Chuong());
+
+                if (soDangXet < soHienTai && soDangXet > maxThoaMan) {
+                    maxThoaMan = soDangXet;
+                    chuongTruoc = chuong;
+                    truoc = chuongTruoc.getso_Chuong();
+                }
             }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
-        for (Chuong chuonga : chuonga.getChuong()) {
-            if (chuonga.getso_Chuong().equals(tien)) {
-                coChuongright = true;
-                break;
+        try {
+            float soHienTai = Float.parseFloat(so_chuong);
+            float minThoaMan = Float.POSITIVE_INFINITY;
+
+            for (Chuong chuong : chuonga.getChuong()) {
+                float soDangXet = Float.parseFloat(chuong.getso_Chuong());
+
+                if (soDangXet > soHienTai && soDangXet < minThoaMan) {
+                    minThoaMan = soDangXet;
+                    chuongSau = chuong;
+                    sau = chuongSau.getso_Chuong();
+                }
             }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
-        if (coChuongleft) {
+
+        if (chuongTruoc!=null) {
             bt1.setVisibility(VISIBLE);
         }
-        if (coChuongright) {
+        if (chuongSau!=null) {
             bt2.setVisibility(VISIBLE);
         }
-        bt2.setOnClickListener(v -> {
-            Intent intent = new Intent(this, anhchuong.class);
-            intent.putExtra("id_truyen", id_truyen);
-            intent.putExtra("chuong", tien);
-            startActivity(intent);
-        });
         bt1.setOnClickListener(v -> {
             Intent intent = new Intent(this, anhchuong.class);
             intent.putExtra("id_truyen", id_truyen);
-            intent.putExtra("chuong", lui);
+            intent.putExtra("chuong",truoc);
             startActivity(intent);
         });
+        bt2.setOnClickListener(v -> {
+            Intent intent = new Intent(this, anhchuong.class);
+            intent.putExtra("id_truyen", id_truyen);
+            intent.putExtra("chuong",sau);
+            startActivity(intent);
+        });
+        return chuongTruoc;
+
     }
 
     private void getanh(String so_chuong, String idtruyen) {

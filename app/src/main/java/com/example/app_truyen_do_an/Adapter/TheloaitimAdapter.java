@@ -23,11 +23,10 @@ import java.util.List;
 
 public class TheloaitimAdapter extends RecyclerView.Adapter<TheloaitimAdapter.TheloaiViewHolder> {
     private List<the_loai> theLoaiList;
-    private Context context;
     List<the_loai> selectedList = new ArrayList<>();
 
-    public TheloaitimAdapter(List<the_loai> theLoaiList, Context context){
-        this.context = context;
+    public TheloaitimAdapter(List<the_loai> theLoaiList ){
+
         this.theLoaiList = theLoaiList;
     }
     @NonNull

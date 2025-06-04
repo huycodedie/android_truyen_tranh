@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="15dp"
     tools:context=".ui.profile_truyen.charter">
 
     <LinearLayout
@@ -15,7 +15,8 @@
             android:id="@+id/tong_chuong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
             android:text="" />
 
         <View

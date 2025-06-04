@@ -22,11 +22,11 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiService {
-    @GET("truyen/truyen.php")
+    @GET("truyen/home.php")
     Call<List<truyen>> gettruyen();
     @GET("truyen/anhslide.php")
     Call<List<truyen>> getanhslide();
-    @GET("truyen/truyen.php")
+    @GET("truyen/danh_sach_truyen.php")
     Call<List<truyen>> getChiTietTruyen(@Query("id_truyen") String id,@Query("id_user") int iduser);
     @GET("tim_kiem/timkiem.php")
     Call<List<truyen>> getTimKiemTheLoai1(@Query("id_tl") String id);
@@ -37,24 +37,23 @@ public interface ApiService {
     @POST("user/dangky.php")
     @FormUrlEncoded
     Call<usernhan> dangky(@Field("name_user") String tk,@Field("password_hash") String xnmk, @Field("email") String email);
-    @POST("su_ly_tac_vu/layluu.php")
-    @FormUrlEncoded
-    Call<List<truyen>> getluu(@Field("id_user") int iduser);
+    @GET("su_ly_tac_vu/layluu.php")
+    Call<List<truyen>> getluu(@Query("id_user") int iduser);
     @POST("su_ly_tac_vu/luu.php")
     @FormUrlEncoded
     Call<Void> savert(@Field("id_user") int id_user, @Field("id_truyen") String idtruyen);
     @POST("su_ly_tac_vu/themluu.php")
     @FormUrlEncoded
     Call<Void> themluu(@Field("id_user") int id_user, @Field("id_truyen") String idtruyen, @Field("so") int so);
-    @GET("truyen/truyen.php")
+    @GET("truyen/danh_sach_truyen.php")
     Call<List<truyen>> getChiTietTruyen1(@Query("id_truyen") String id);
     @GET("tim_kiem/timkiemten.php")
     Call<List<truyen>> getTimKiemtentruyen(@Query("name_truyen") String nhapten);
+
     @GET("su_ly_tac_vu/getanh.php")
     Call<List<anh>> getanh(@Query("chuong") String chuong, @Query("id_user") int id_user, @Query("id_truyen") String idtruyen);
-    @POST("truyen/laychuongdadoc.php")
-    @FormUrlEncoded
-    Call<List<Chuong>> getlaychuongdadoc(@Field("id_user") int id_user, @Field("id_truyen") String idtruyen);
+    @GET("truyen/laychuongdadoc.php")
+    Call<List<Chuong>> getlaychuongdadoc(@Query("id_user") int id_user, @Query("id_truyen") String idtruyen);
     @POST("user/sua_thong_tin.php")
     @FormUrlEncoded
     Call<usernhan> suathongtin(@Field("name") String tk,@Field("sdt") String sdt, @Field("email") String email,@Field("id_user") int id_user);
@@ -64,7 +63,9 @@ public interface ApiService {
     @Multipart
     @POST("su_ly_tac_vu/uploadanh.php") // hoặc đường dẫn upload ảnh
     Call<ResponseBody> uploadImage(@Part MultipartBody.Part image, @Part("id_user") int id_user);
-
     @GET("truyen/the_loai.php")
     Call<List<the_loai>> gettheloai();
+    @POST("admin/xoa_truyen.php")
+    @FormUrlEncoded
+    Call<usernhan> xoa_truyen(@Field("id_truyen") String idtruyen);
 }

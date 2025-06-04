@@ -65,8 +65,8 @@ public class tim_the_loai extends AppCompatActivity {
         Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar_tim_tl);
         setSupportActionBar(toolbar);
         t1 = findViewById(R.id.icon_loc);
-        t2 = findViewById(R.id.icon_xap_sep_1);
-        t3 = findViewById(R.id.icon_xap_sep_2);
+//        t2 = findViewById(R.id.icon_xap_sep_1);
+//        t3 = findViewById(R.id.icon_xap_sep_2);
         tx1 = findViewById(R.id.text_bar_tim_tl);
         id_tl = getIntent().getStringExtra("id_tl");
         show = getIntent().getIntExtra("show",0);
@@ -159,7 +159,7 @@ public class tim_the_loai extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<the_loai>> call, Response<List<the_loai>> response) {
                 List<the_loai> tl = response.body();
-                theloaitimAdapter  = new TheloaitimAdapter(tl, tim_the_loai.this);
+                theloaitimAdapter  = new TheloaitimAdapter(tl);
                 recyclerView2.setAdapter(theloaitimAdapter);
             }
 

@@ -18,6 +18,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -41,13 +42,11 @@ public class thong_tin_truyen extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private String idtruyen;
     private String name_truyen;
-
     private Truyenviewmodel viewmodel;
-    private Button dau, cuoi;
+    private Button dau, doc_tiep;
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
-    private final String[] tabTitles = {"giới thiệu","char","bình luận"};
-    private final int[] tabIcons = {R.drawable.ic_home_black_24dp,R.drawable.ic_home_black_24dp,R.drawable.ic_home_black_24dp};
+    private final String[] tabTitles = {"Giới thiệu","Chương"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +56,7 @@ public class thong_tin_truyen extends AppCompatActivity {
         //view chuyển dữ liệu qua các fragment
         viewmodel = new ViewModelProvider(this).get(Truyenviewmodel.class);
         dau = findViewById(R.id.doc_tu_dau);
-        cuoi = findViewById(R.id.doc_tiep);
+        doc_tiep = findViewById(R.id.doc_tiep);
 
         idtruyen = getIntent().getStringExtra("id_truyen");
         name_truyen = getIntent().getStringExtra("name_truyen");
@@ -66,6 +65,8 @@ public class thong_tin_truyen extends AppCompatActivity {
         int iduser = sharedPreferences.getInt("id_user",-1);
         if (idtruyen != null && iduser != -1){
             getTruyenchitiet(idtruyen,iduser);
+            doc_tiep.setBackgroundColor(ContextCompat.getColor(this, R.color.orange));
+            xuat_hien_chuong_da_doc(iduser,idtruyen);
         } else if (idtruyen != null) {
             getTruyenchitiet1(idtruyen);
         }
@@ -85,12 +86,12 @@ public class thong_tin_truyen extends AppCompatActivity {
             intent.putExtra("chuong", soChuongDau);
             startActivity(intent);
         });
-        cuoi.setOnClickListener(v -> {
+        doc_tiep.setOnClickListener(v -> {
             if (iduser == -1){
                 Toast.makeText(v.getContext(), "vui lòng đăng nhập để lưu thông tin đã đọc", Toast.LENGTH_LONG).show();
                 return;
             }
-            doctiep(iduser,idtruyen);
+            doc_tiep(iduser,idtruyen);
 
         });
 
@@ -99,20 +100,18 @@ public class thong_tin_truyen extends AppCompatActivity {
         viewPager2 = findViewById(R.id.view_pager);
         viewPager2.setAdapter(new viewthongtinAdapter(this));
 
-
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             // Set Custom View cho từng Tab
             View view = LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-            ImageView tabIcon = view.findViewById(R.id.tab_icon);
+
             TextView tabText = view.findViewById(R.id.tab_text);
 
-            tabIcon.setImageResource(tabIcons[position]);
             tabText.setText(tabTitles[position]);
 
             tab.setCustomView(view);
         }).attach();
     }
-    private void doctiep(int iduser, String idtruyen) {
+    private void doc_tiep(int iduser, String idtruyen) {
         ApiService apiService = RetrofitClient.getApiService();
         Call<List<Chuong>> call = apiService.getlaychuongdadoc(iduser,idtruyen);
         call.enqueue(new Callback<List<Chuong>>() {
@@ -122,6 +121,22 @@ public class thong_tin_truyen extends AppCompatActivity {
                 intent.putExtra("id_truyen", idtruyen);
                 intent.putExtra("chuong", response.body().get(0).getso_Chuong());
                 startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<List<Chuong>> call, Throwable t) {
+
+            }
+        });
+
+    }
+    private void xuat_hien_chuong_da_doc(int iduser, String idtruyen) {
+        ApiService apiService = RetrofitClient.getApiService();
+        Call<List<Chuong>> call = apiService.getlaychuongdadoc(iduser,idtruyen);
+        call.enqueue(new Callback<List<Chuong>>() {
+            @Override
+            public void onResponse(Call<List<Chuong>> call, Response<List<Chuong>> response) {
+                doc_tiep.setText("chương "+ response.body().get(0).getso_Chuong());
             }
 
             @Override

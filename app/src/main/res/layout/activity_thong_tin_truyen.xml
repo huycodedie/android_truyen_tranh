@@ -26,15 +26,20 @@
         tools:ignore="MissingConstraints" />
 
     <!-- ViewPager2 -->
+
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tab_layout"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
+        app:layout_constraintBottom_toTopOf="@id/button_layout"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
 
     <LinearLayout
+        android:id="@+id/button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -44,17 +49,24 @@
 
             <Button
                 android:id="@+id/doc_tu_dau"
-                android:layout_width="210dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:background="@color/orange"
-                android:text="doc tu dau"/>
+                android:text="đọc từ đầu"/>
+            <Button
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"/>
             <Button
                 android:id="@+id/doc_tiep"
-                android:layout_width="210dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_orange_light"
                 android:textColor="@color/white"
-                android:text="doc tiep"/>
+                android:text="đọc tiếp "/>
 
     </LinearLayout>
 

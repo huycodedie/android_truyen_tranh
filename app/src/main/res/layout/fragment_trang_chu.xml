@@ -12,147 +12,207 @@
         android:id="@+id/toolbar_trang_chu"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:title="Trang Chủ"
-        android:background="@android:color/holo_orange_light"
-        app:titleTextColor="@color/black"
+        android:background="@color/white"
         >
-        <ImageView
-            android:id="@+id/tim_kiem"
-            android:layout_marginStart="218dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/search"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Trang Chủ"
+                android:textColor="@color/gray"
+                android:textStyle="bold"
+                android:textSize="27dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="8dp"
+                app:strokeWidth="2dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/tim_kiem"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/search2"
+                    android:tint="@color/black"
+                    android:scaleType="centerInside"
+                    android:padding="4dp"/>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
-        <LinearLayout
+        android:layout_marginTop="60dp"
+        android:layout_height="match_parent">
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/anh_dau"
+            android:layout_height="match_parent">
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/layput_view"
+                android:visibility="visible"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/anh_dau"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp" />
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/tim_the_loai"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <ImageButton
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="@drawable/background_button_50"
+                                android:src="@drawable/the_loai"
+                                android:clickable="false"
+                                android:focusable="false"
+                                />
+                            <TextView
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Thể loại"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/layout_truyen_moi"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_marginStart="100dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <ImageButton
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="@drawable/background_button_50"
+                                android:src="@drawable/new_key"
+                                android:clickable="false"
+                                android:focusable="false"
+                                />
+                            <TextView
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Truyện mới"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textSize="18dp"
+                                android:textColor="@color/black"
+                                android:text="Truyện mới cập nhật"/>
+
+                            <ImageView
+                                android:id="@+id/truyen_moi_tt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/phai_24" />
+                        </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/truyen_moi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:scrollbars="vertical" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="35dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textSize="18dp"
+                                android:textColor="@color/black"
+                                android:text="Truyện Manhwa"/>
+
+                            <ImageView
+                                android:id="@+id/truyen_Manhwa_tt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/phai_24" />
+                        </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/truyen_Manhwa"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:scrollbars="vertical" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
             <LinearLayout
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="55dp"
+                android:visibility="gone"
+                android:id="@+id/layout_bao_loi"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/tim_the_loai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@color/orange"
-                        android:src="@drawable/the_loai_24"
-                        app:shapeAppearanceOverlay="@style/CircleImage" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Thể loại"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/layout_truyen_moi"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_marginStart="100dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@color/orange"
-                        android:src="@drawable/the_loai_24"
-                        app:shapeAppearanceOverlay="@style/CircleImage" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Truyện mới"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="18dp"
-                        android:text="Truyện mới cập nhật"/>
-
-                    <ImageView
-                        android:id="@+id/truyen_moi_tt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/phai_24" />
-                </LinearLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="5dp"
-                    android:id="@+id/truyen_moi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:scrollbars="vertical" />
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="helo word"
-                    android:textSize="18dp" />
-
-                <ImageButton
-                    android:layout_width="36dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="290dp"
-                    android:background="@null"
-                    android:src="@drawable/ic_home_black_24dp" />
+                    android:textColor="@color/got"
+                    android:textStyle="bold"
+                    android:textSize="30dp"
+                    android:text="không có internet"/>
             </LinearLayout>
-
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="500dp"
-                android:src="@drawable/anh_truyen_moi" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1000dp"
-                android:src="@drawable/anh_truyen_moi" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

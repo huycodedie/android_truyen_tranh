@@ -38,7 +38,7 @@
 
                 <TextView
                     android:textColor="@color/black"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="chào mừng quay trở lại" />
@@ -158,21 +158,23 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/ten_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
                     android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dp"
                     android:text="" />
             </LinearLayout>
         </LinearLayout>
@@ -218,12 +220,13 @@
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:textSize="15dp"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:text="Liên hệ"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/doi_mat_khau"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -237,12 +240,13 @@
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:textSize="15dp"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:text="Thay đổi mật khẩu"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/thong_tin_tai_khoan"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -256,35 +260,36 @@
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:textSize="15dp"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:text="Thông tin tài khoản"/>
             </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+<!--            <LinearLayout-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:tint="@android:color/holo_orange_light"
-                    android:src="@drawable/che_do" />
-                <TextView
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="15dp"
-                    android:layout_height="wrap_content"
-                    android:text="Chế độ"/>
-                <Switch
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+<!--                <ImageView-->
+<!--                    android:layout_width="25dp"-->
+<!--                    android:layout_height="25dp"-->
+<!--                    android:tint="@android:color/holo_orange_light"-->
+<!--                    android:src="@drawable/che_do" />-->
+<!--                <TextView-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:textSize="15dp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Chế độ"/>-->
+<!--                <Switch-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"/>-->
+<!--            </LinearLayout>-->
             <LinearLayout
                 android:id="@+id/dang_xuat"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -298,6 +303,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:textSize="15dp"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:text="Đăng xuất"/>
             </LinearLayout>

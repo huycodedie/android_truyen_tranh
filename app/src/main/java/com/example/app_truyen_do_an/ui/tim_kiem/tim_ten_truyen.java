@@ -34,7 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class tim_ten_truyen extends AppCompatActivity {
-    private EditText nhap_ten;
+    private EditText nhap_ten_1;
     private ImageView xoa;
     private RecyclerView recyclerView;
     private timtentruyenadapter timtentruyenadapter;
@@ -45,7 +45,7 @@ public class tim_ten_truyen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tim_ten_truyen);
-        nhap_ten = findViewById(R.id.nhap_ten);
+        nhap_ten_1 = findViewById(R.id.nhap_ten);
         xoa = findViewById(R.id.xoa);
 
         recyclerView= findViewById(R.id.view_ten);
@@ -54,10 +54,10 @@ public class tim_ten_truyen extends AppCompatActivity {
         xoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nhap_ten.setText("");
+                nhap_ten_1.setText("");
             }
         });
-        nhap_ten.setOnEditorActionListener((v, actionId, event) -> {
+        nhap_ten_1.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                     (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
                 gettimtentruyen();
@@ -78,7 +78,7 @@ public class tim_ten_truyen extends AppCompatActivity {
     }
 
     private void gettimtentruyen() {
-        String nhapten = nhap_ten.getText().toString().trim();
+        String nhapten = nhap_ten_1.getText().toString().trim();
         ApiService apiService = RetrofitClient.getApiService();
         Call<List<truyen>> call = apiService.getTimKiemtentruyen(nhapten);
         call.enqueue(new Callback<List<truyen>>() {
@@ -91,11 +91,9 @@ public class tim_ten_truyen extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<truyen>> call, Throwable t) {
-
             }
         });
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
         if(item.getItemId() == android.R.id.home){

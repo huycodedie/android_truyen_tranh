@@ -1,6 +1,7 @@
 package com.example.app_truyen_do_an.ui.profile_truyen;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -32,6 +33,7 @@ import com.example.app_truyen_do_an.R;
 import com.example.app_truyen_do_an.api.ApiService;
 import com.example.app_truyen_do_an.api.RetrofitClient;
 import com.example.app_truyen_do_an.model.Truyenviewmodel;
+import com.example.app_truyen_do_an.model.usernhan;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,10 +41,11 @@ import retrofit2.Response;
 
 
 public class gioi_thieu extends Fragment {
-    private TextView gioi_thieu_tt, name_tac_gia_tt, ten_truyen_tt, luot_xem, tien_do;
-    private ImageView anh_truyen_tt, anh_tac_gia, theo_doi;
+    private TextView gioi_thieu_tt, name_tac_gia_tt, ten_truyen_tt, luot_xem, tien_do, tong_theo_doi, tong_chuong;
+    private ImageView anh_truyen_tt, anh_tac_gia, theo_doi,admin_xoa;
     private RecyclerView recyclerView;
     private int so1 = 1, so0 = 0;
+    private SharedPreferences sharedPreferences;
     private TheloaiAdapter theloaiAdapter;
     @SuppressLint("MissingInflatedId")
     @NonNull
@@ -51,7 +54,7 @@ public class gioi_thieu extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_gioi_thieu,container, false);
-
+        admin_xoa = view.findViewById(R.id.xoa_tt);
         tien_do = view.findViewById(R.id.tien_do);
         ten_truyen_tt = view.findViewById(R.id.ten_truyen_tt);
         name_tac_gia_tt = view.findViewById(R.id.name_tac_gia_tt);
@@ -60,12 +63,18 @@ public class gioi_thieu extends Fragment {
         anh_tac_gia = view.findViewById(R.id.anh_tac_gia);
         theo_doi = view.findViewById(R.id.theo_doi_truyen);
         luot_xem = view.findViewById(R.id.luot_xem);
+        tong_theo_doi = view.findViewById(R.id.tong_theo_doi);
+        tong_chuong = view.findViewById(R.id.tong_chuong);
         recyclerView = view.findViewById(R.id.view_the_loai);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
 
+        sharedPreferences = requireActivity().getSharedPreferences("Myapp", Context.MODE_PRIVATE);
+        int quyen = sharedPreferences.getInt("quyen",-1);
+        if (quyen == 2){
+            admin_xoa.setVisibility(View.VISIBLE);
+        }
         Truyenviewmodel viewmodel = new ViewModelProvider(requireActivity()).get(Truyenviewmodel.class);
-
         viewmodel.gettruyenchitiet().observe(getViewLifecycleOwner(), truyen -> {
             ten_truyen_tt.setText(truyen.getName_truyen());
             if (truyen.getName_tac_gia_t() != null){
@@ -75,6 +84,8 @@ public class gioi_thieu extends Fragment {
             }
             gioi_thieu_tt.setText(truyen.getGioi_thieu());
             luot_xem.setText(truyen.getLuot_xem());
+            tong_theo_doi.setText(truyen.getTong_truyen_theo_doi());
+            tong_chuong.setText(truyen.getTong_chuong());
             Glide.with(getContext())
                     .load(truyen.getAnh())
                     .into(anh_truyen_tt);
@@ -87,14 +98,27 @@ public class gioi_thieu extends Fragment {
             }
             if(truyen.getTrang_thai() == 1){
                 tien_do.setText("Đang tiến hành");
-            }else {
+            } else if (truyen.getTrang_thai()==2) {
                 tien_do.setText("Đã hoàn thành");
+            }else {
+                tien_do.setText("Sắp ra mắt");
             }
             if (truyen.getLuu() == 0){
                 theo_doi.setImageTintList(ContextCompat.getColorStateList(requireContext(),R.color.gray));
             }else {
                 theo_doi.setImageTintList(ContextCompat.getColorStateList(requireContext(),R.color.orange));
             }
+            admin_xoa.setOnClickListener(v -> {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Xác nhận xóa")
+                        .setMessage("Bạn có chắc chắn muốn xóa truyện này không?")
+                        .setPositiveButton("Xóa", (dialog, which) -> {
+                            xoa_truyen(truyen.getId_truyen()); // Gọi hàm xóa nếu xác nhận
+                        })
+                        .setNegativeButton("Hủy", null) // Không làm gì nếu hủy
+                        .show();
+            });
+
             theo_doi.setOnClickListener(v ->{
 
                 ColorStateList currentTint = theo_doi.getImageTintList();
@@ -114,8 +138,22 @@ public class gioi_thieu extends Fragment {
         return view;
     }
 
+    private void xoa_truyen(String idTruyen) {
+        ApiService apiService = RetrofitClient.getApiService();
+        Call<usernhan>call = apiService.xoa_truyen(idTruyen);
+        call.enqueue(new Callback<usernhan>() {
+            @Override
+            public void onResponse(Call<usernhan> call, Response<usernhan> response) {
+                Toast.makeText(getContext(),response.body().getMessage(),Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(Call<usernhan> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void luutruyen(String idTruyen, int so) {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Myapp", Context.MODE_PRIVATE);
         int id_user = sharedPreferences.getInt("id_user", -1);
         if (id_user == -1) {
             Toast.makeText(getContext(), "vui lòng đăng nhập để theo dõi truyện", Toast.LENGTH_SHORT).show();
