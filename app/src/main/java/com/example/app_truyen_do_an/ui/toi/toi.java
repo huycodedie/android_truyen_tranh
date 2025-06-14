@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,7 +49,7 @@ public class toi extends Fragment {
     private LinearLayout layout_dang_nhap,layout_thong_tin ,dang_xuat, thong_tin_tai_khoan, doi_mat_khau, thong_tin_user;
     private SharedPreferences sharedPreferences;
     private ProgressBar progressBar;
-    private ImageView xoa_tai_khoan_dang_nhap, xoa_password, anh_tai_khoan;
+    private ImageView xoa_tai_khoan_dang_nhap, xoa_password, anh_tai_khoan, hien_password;
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
@@ -60,6 +62,8 @@ public class toi extends Fragment {
         dang_nhap = view.findViewById(R.id.butdangnhap);
         progressBar = view.findViewById(R.id.progressBar);
         lay_lai_mk = view.findViewById(R.id.lay_lai_mk);
+        xoa_password = view.findViewById(R.id.xoa_password);
+        hien_password = view.findViewById(R.id.hien_password);
 
         //sau khi đăng nhâp
         dang_ky = view.findViewById(R.id.dang_ky);
@@ -71,11 +75,10 @@ public class toi extends Fragment {
         doi_mat_khau = view.findViewById(R.id.doi_mat_khau);
         thong_tin_tai_khoan = view.findViewById(R.id.thong_tin_tai_khoan);
         layout_thong_tin = view.findViewById(R.id.layout_thong_tin);
-        xoa_password = view.findViewById(R.id.xoa_password);
         xoa_tai_khoan_dang_nhap = view.findViewById(R.id.xoa_tai_khoan_dang_nhap);
         dang_xuat = view.findViewById(R.id.dang_xuat);
 
-        // dùng để lưu dữ liệu android
+        // dùng để lưu dữ liệu thông tin user
         sharedPreferences = requireActivity().getSharedPreferences("Myapp", Context.MODE_PRIVATE);
         checklogin();
 
@@ -92,17 +95,52 @@ public class toi extends Fragment {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void afterTextChanged(Editable s) {}
         });
+
         Password.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() > 0) {
                     xoa_password.setVisibility(View.VISIBLE);
+                    hien_password.setVisibility(View.VISIBLE);
                 }else {
                     xoa_password.setVisibility(View.GONE);
+                    hien_password.setVisibility(View.GONE);
                 }
             }
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void afterTextChanged(Editable s) {}
+        });
+
+        //set xóa dữ liệu text
+        xoa_tai_khoan_dang_nhap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                name_tai_khoan_dang_nhap.setText("");
+            }
+        });
+        xoa_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Password.setText("");
+            }
+        });
+        hien_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Password.getInputType() ==
+                        (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                    // Hiện mật khẩu
+                    Password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    hien_password.setImageResource(R.drawable.mat_off_24);
+
+                } else {
+                    // Ẩn mật khẩu
+                    Password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    hien_password.setImageResource(R.drawable.mat_on_24);
+                }
+                // Đặt con trỏ về cuối văn bản
+                Password.setSelection(Password.getText().length());
+            }
         });
 
         //đăng xuất tài khoản
@@ -161,19 +199,7 @@ public class toi extends Fragment {
                 startActivity(intent);
             }
         });
-        //set xóa dữ liệu text
-        xoa_tai_khoan_dang_nhap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name_tai_khoan_dang_nhap.setText("");
-            }
-        });
-        xoa_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Password.setText("");
-            }
-        });
+
         return view;
     }
 
