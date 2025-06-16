@@ -70,8 +70,8 @@ public class thong_tin_truyen extends AppCompatActivity {
         } else if (idtruyen != null) {
             getTruyenchitiet1(idtruyen);
         }
-        //thanh activatibar
 
+        //thanh activatibar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(name_truyen);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -136,7 +136,12 @@ public class thong_tin_truyen extends AppCompatActivity {
         call.enqueue(new Callback<List<Chuong>>() {
             @Override
             public void onResponse(Call<List<Chuong>> call, Response<List<Chuong>> response) {
-                doc_tiep.setText("chương "+ response.body().get(0).getso_Chuong());
+                if (response.body() != null && !response.body().isEmpty()) {
+                    doc_tiep.setText("Chương " + response.body().get(0).getso_Chuong());
+                } else {
+                    doc_tiep.setText("Đoc tiếp");
+                }
+
             }
 
             @Override

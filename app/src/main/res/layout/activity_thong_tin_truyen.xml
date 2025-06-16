@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="70dp"
-
     android:fitsSystemWindows="true"
     tools:context=".ui.profile_truyen.thong_tin_truyen">
 
@@ -51,10 +50,11 @@
                 android:id="@+id/doc_tu_dau"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:background="@color/orange"
-                android:text="đọc từ đầu"/>
+                android:text="Đọc từ đầu"/>
             <Button
                 android:layout_width="2dp"
                 android:layout_height="wrap_content"
@@ -66,7 +66,8 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_orange_light"
                 android:textColor="@color/white"
-                android:text="đọc tiếp "/>
+                android:textAllCaps="false"
+                android:text="Đọc tiếp "/>
 
     </LinearLayout>
 
